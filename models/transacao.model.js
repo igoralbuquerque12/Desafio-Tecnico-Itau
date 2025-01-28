@@ -10,3 +10,8 @@ exports.criarTransacao = async (transacao) => {
 };
 
 // Não expor diretamente a variável (module.exports = memoria) para garantir que somente essas funções acima possam edita-las. 
+
+exports.deletarTransacoes = async () => {
+    memoria.length = 0;
+    return
+} 

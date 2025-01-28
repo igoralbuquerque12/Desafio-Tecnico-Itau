@@ -23,6 +23,7 @@ exports.adicionarTransacao = async (req, res) => {
         }
 
         await memoriaModel.criarTransacao(req.body);
+        console.log('tamanho :', memoriaModel.getMemoria())
         return res.status(201).end();
 
     } catch (error) {
@@ -31,6 +32,7 @@ exports.adicionarTransacao = async (req, res) => {
 };
 
 exports.deletarTransacao = async (req, res) => {
-    console.log('Teste delete transacao.')
+    await memoriaModel.deletarTransacoes()
+    return res.status(200).end();
 }
 
