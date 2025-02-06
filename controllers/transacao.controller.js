@@ -13,7 +13,7 @@ exports.adicionarTransacao = async (req, res) => {
         if (dataAtual < dataTransacao) {
             return res.status(422).end();
         }
-        console.log(typeof req.body.valor)
+
         if (typeof req.body.valor === 'number') {
             if (req.body.valor < 0) {
                 return res.status(422).end();
@@ -23,7 +23,7 @@ exports.adicionarTransacao = async (req, res) => {
         }
 
         await memoriaModel.criarTransacao(req.body);
-        console.log('tamanho :', memoriaModel.getMemoria())
+
         return res.status(201).end();
 
     } catch (error) {
@@ -32,7 +32,7 @@ exports.adicionarTransacao = async (req, res) => {
 };
 
 exports.deletarTransacao = async (req, res) => {
-    await memoriaModel.deletarTransacoes()
+    await memoriaModel.deletarTransacoes();
     return res.status(200).end();
 }
 

@@ -4,7 +4,7 @@
   "description": "Resolução do desafio técnico do Itaú utilizando JS.",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
+    "test": "jest --passWithNoTests",
     "start": "nodemon server.js"
   },
   "repository": {
@@ -21,5 +21,8 @@
     "dotenv": "^16.4.7",
     "express": "^4.21.2",
     "nodemon": "^3.1.9"
+  },
+  "devDependencies": {
+    "jest": "^29.7.0"
   }
 }

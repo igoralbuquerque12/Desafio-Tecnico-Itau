@@ -14,4 +14,4 @@ exports.criarTransacao = async (transacao) => {
 exports.deletarTransacoes = async () => {
     memoria.length = 0;
     return
-} 
+};
