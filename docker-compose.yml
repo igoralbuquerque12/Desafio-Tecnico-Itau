@@ -1,0 +1,14 @@
+version: "3"  
+
+services: 
+  backend-itau:  
+    build: .  
+    command: npm start 
+    ports:
+      - "${PORT}:${PORT}"  
+    volumes:
+      - .:/usr/app  
+    env_file:
+      - ./.env
+    expose:
+      - ${PORT}
