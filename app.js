@@ -1,5 +1,8 @@
 const express = require('express');
 const app = express();
+const logger = require('./logger')
+
+logger.log('info', 'Aplicação iniciada.')
 
 app.use(express.json());
 

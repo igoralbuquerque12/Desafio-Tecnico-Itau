@@ -1,43 +1,55 @@
 const memoriaModel = require('./../models/transacao.model');
+const logger = require('./../logger')
 
 exports.imprimirEstatisticas = async (req, res) => {
-    const memoria = await memoriaModel.getMemoria();
-    const tempoLimite = new Date(Date.now() - 60 * 1000);
+    try {
+        logger.http(`Requisição recebida: ${req.method} ${req.originalUrl}`);
 
-    let count = 0, sum = 0, avg = 0, max = 0, min = 0;
+        const memoria = await memoriaModel.getMemoria();
+        logger.info(`Dados carregados da memória: ${memoria.length} registros`);
 
-    for (let i = memoria.length - 1; i >= 0; i--) {
-        const tempoMemoria = new Date(memoria[i].dataHora)
-        if (tempoMemoria < tempoLimite) {
-            break;
+        const tempoLimite = new Date(Date.now() - 60 * 1000);
+
+        let count = 0, sum = 0, avg = 0, max = 0, min = 0;
+
+        for (let i = memoria.length - 1; i >= 0; i--) {
+            const tempoMemoria = new Date(memoria[i].dataHora)
+            if (tempoMemoria < tempoLimite) {
+                break;
+            }
+
+            if (count == 0) {
+                min = memoria[i].valor;
+                max = memoria[i].valor;
+            }
+
+            count = count + 1;
+            sum = sum + memoria[i].valor; 
+
+            if (memoria[i].valor > max) {
+                max = memoria[i].valor
+            }
+            if (memoria[i].valor < min) {
+                min = memoria[i].valor
+            }
+        };
+
+        if (count != 0) {
+            avg = sum / count
         }
 
-        if (count == 0) {
-            min = memoria[i].valor;
-            max = memoria[i].valor;
-        }
+        logger.info(`Estatísticas calculadas: count=${count}, sum=${sum}, avg=${avg}, min=${min}, max=${max}`);
 
-        count = count + 1;
-        sum = sum + memoria[i].valor; 
+        res.status(201).json({
+            count: count,
+            sum: sum,
+            avg: avg,
+            min: min,
+            max: max
+        });
 
-        if (memoria[i].valor > max) {
-            max = memoria[i].valor
-        }
-        if (memoria[i].valor < min) {
-            min = memoria[i].valor
-        }
-    };
-
-    if (count != 0) {
-        avg = sum / count
+    } catch (error) {
+        logger.error(`Erro ao calcular estatísticas: ${error.message}`, { stack: error.stack });
+        res.status(500);
     }
-
-    res.status(201).json({
-        count: count,
-        sum: sum,
-        avg: avg,
-        min: min,
-        max: max
-    });
-
 }
