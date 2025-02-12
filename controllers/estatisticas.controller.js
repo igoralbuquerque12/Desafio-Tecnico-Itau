@@ -8,7 +8,11 @@ exports.imprimirEstatisticas = async (req, res) => {
         const memoria = await memoriaModel.getMemoria();
         logger.info(`Dados carregados da memória: ${memoria.length} registros`);
 
-        const tempo = req.query.tempo || process.env.TEMPO_ESTATISTICAS;
+        let tempo = 60; // Mudar pra env
+
+        if (req.query.tempo) {
+            tempo = req.query.tempo;
+        }
 
         const tempoLimite = new Date(Date.now() - tempo * 1000);
 

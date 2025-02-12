@@ -58,11 +58,20 @@ describe('Testes no adicionarTransacao', () => {
 describe('Testes no deletarTransacao', () => {
     let req, res;
 
-    test('Chamada correta da função', async () => {
-        req = { method: 'DELETE', originalUrl: '/Transacao' }
+    beforeEach(() => {
+        req = { method: 'DELETE', originalUrl: '/Transacao' };
         res = { status: jest.fn().mockReturnThis(), end: jest.fn() };
+    })
+
+    test('Chamada correta da função', async () => {
         await deletarTransacao(req, res);
         expect(res.status).toHaveBeenCalledWith(200);
+    });
+
+    test('Chamada falha: erro 500', async() => {
+        memoriaModel.deletarTransacoes.mockImplementationOnce(() => { throw new Error(); });
+        await deletarTransacao(req, res);
+        expect(res.status).toHaveBeenCalledWith(500);
     });
 });
 
