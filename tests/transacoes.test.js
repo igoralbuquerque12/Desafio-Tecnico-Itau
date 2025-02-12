@@ -11,7 +11,7 @@ describe('Testes no adicionarTransacao', () => {
     let req, res;
 
     beforeEach(() => {
-        req = { body: {} };
+        req = { body: {}, method: 'POST', originalUrl: '/Transacao' };
         res = { status: jest.fn().mockReturnThis(), end: jest.fn() };
     });
 
@@ -59,9 +59,10 @@ describe('Testes no deletarTransacao', () => {
     let req, res;
 
     test('Chamada correta da função', async () => {
-       res = { status: jest.fn().mockReturnThis(), end: jest.fn() };
-       await deletarTransacao(req, res);
-       expect(res.status).toHaveBeenCalledWith(200);
+        req = { method: 'DELETE', originalUrl: '/Transacao' }
+        res = { status: jest.fn().mockReturnThis(), end: jest.fn() };
+        await deletarTransacao(req, res);
+        expect(res.status).toHaveBeenCalledWith(200);
     });
 });
 

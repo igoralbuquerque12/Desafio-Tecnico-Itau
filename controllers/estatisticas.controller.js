@@ -40,7 +40,7 @@ exports.imprimirEstatisticas = async (req, res) => {
 
         logger.info(`Estatísticas calculadas: count=${count}, sum=${sum}, avg=${avg}, min=${min}, max=${max}`);
 
-        res.status(201).json({
+        res.status(200).json({
             count: count,
             sum: sum,
             avg: avg,

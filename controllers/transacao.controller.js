@@ -15,7 +15,7 @@ exports.adicionarTransacao = async (req, res) => {
         const dataTransacao = new Date(req.body.dataHora);
         
         if (dataAtual < dataTransacao) {
-            logger.error(`Erro na data da requisição: ${dataHora} é uma data futura.`);
+            logger.error(`Erro na data da requisição: ${dataTransacao} é uma data futura.`);
             return res.status(422).end();
         }
 
@@ -30,7 +30,7 @@ exports.adicionarTransacao = async (req, res) => {
         }
 
         await memoriaModel.criarTransacao(req.body);
-        logger.info(`Transação adicionada: Valor=${valor}, Data=${dataHora}`);
+        logger.info(`Transação adicionada: Valor=${req.body.valor}, Data=${req.body.dataHora}`);
 
         return res.status(201).end();
 
@@ -51,7 +51,7 @@ exports.deletarTransacao = async (req, res) => {
 
     } catch(error) {
         logger.error(`Erro ao deletar transação: ${error.message}`, { stack: error.stack });
-        res.status(500).end();
+        return res.status(500).end();
     }
-}
+};
 

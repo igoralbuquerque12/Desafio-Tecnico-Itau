@@ -10,7 +10,7 @@ describe('Teste no método de imprimir estátisticas', () => {
     let req, res;
 
     beforeEach(() => {
-        req = {};
+        req = { method: 'GET', originalUrl: '/Estatisticas' };
         res = { status: jest.fn().mockReturnThis(), json: jest.fn() };
     });
 
@@ -21,7 +21,7 @@ describe('Teste no método de imprimir estátisticas', () => {
                 { valor: 200, dataHora: (new Date(Date.now() - 30000)) }  // Inválido (+60 segundos)
             ]);
 
-            a= await imprimirEstatisticas(req, res);
+            await imprimirEstatisticas(req, res);
 
             expect(res.status).toHaveBeenCalledWith(200);
             expect(res.json).toHaveBeenCalledWith({
@@ -41,10 +41,10 @@ describe('Teste no método de imprimir estátisticas', () => {
         expect(res.status).toHaveBeenCalledWith(200);
         expect(res.json).toHaveBeenCalledWith({
             count: 0,
-                sum: 0,
-                avg: 0,
-                min: 0,
-                max: 0
+            sum: 0,
+            avg: 0,
+            min: 0,
+            max: 0
         })
 
 
