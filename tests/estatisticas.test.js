@@ -5,12 +5,14 @@ jest.mock('./../models/transacao.model', () => ({
     getMemoria: jest.fn()
 }));
 
+jest.mock('./../logger');
+
 describe('Teste no método de imprimir estátisticas', () => {
 
     let req, res;
 
     beforeEach(() => {
-        req = { query: {}, method: 'GET', originalUrl: '/Estatisticas' };
+        req = { query: {} };
         res = { status: jest.fn().mockReturnThis(), json: jest.fn() };
     });
 
@@ -70,10 +72,10 @@ describe('Teste no método de imprimir estátisticas', () => {
         });
     });
 
-    test('Chamada falha: erro 500', async() => {
+    test('Chamada falha: erro 400', async() => {
         memoriaModel.getMemoria.mockImplementationOnce(() => { throw new Error(); });
         await imprimirEstatisticas(req, res);
-        expect(res.status).toHaveBeenCalledWith(500);
+        expect(res.status).toHaveBeenCalledWith(400);
     });
 
 });

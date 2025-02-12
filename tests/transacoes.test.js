@@ -7,11 +7,13 @@ jest.mock('./../models/transacao.model', () => ({
     deletarTransacoes: jest.fn()
 }));
 
+jest.mock('./../logger');
+
 describe('Testes no adicionarTransacao', () => {
     let req, res;
 
     beforeEach(() => {
-        req = { body: {}, method: 'POST', originalUrl: '/Transacao' };
+        req = { body: {} };
         res = { status: jest.fn().mockReturnThis(), end: jest.fn() };
     });
 
@@ -59,7 +61,7 @@ describe('Testes no deletarTransacao', () => {
     let req, res;
 
     beforeEach(() => {
-        req = { method: 'DELETE', originalUrl: '/Transacao' };
+        req = { };
         res = { status: jest.fn().mockReturnThis(), end: jest.fn() };
     })
 
@@ -68,10 +70,10 @@ describe('Testes no deletarTransacao', () => {
         expect(res.status).toHaveBeenCalledWith(200);
     });
 
-    test('Chamada falha: erro 500', async() => {
+    test('Chamada falha: erro 400', async() => {
         memoriaModel.deletarTransacoes.mockImplementationOnce(() => { throw new Error(); });
         await deletarTransacao(req, res);
-        expect(res.status).toHaveBeenCalledWith(500);
+        expect(res.status).toHaveBeenCalledWith(400);
     });
 });
 

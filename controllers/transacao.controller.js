@@ -51,7 +51,7 @@ exports.deletarTransacao = async (req, res) => {
 
     } catch(error) {
         logger.error(`Erro ao deletar transação: ${error.message}`, { stack: error.stack });
-        return res.status(500).end();
+        return res.status(400).end();
     }
 };
 

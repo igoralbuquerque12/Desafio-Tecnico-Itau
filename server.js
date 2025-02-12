@@ -5,6 +5,7 @@ const logger = require('./logger')
 const porta = process.env.PORTA
 
 app.listen(porta, () => {
+    console.log(`Servidor rodando na porta: ${porta}`)
     logger.info(`Servidor rodando na porta: ${porta}`);
 });
 

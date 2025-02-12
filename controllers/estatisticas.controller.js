@@ -56,6 +56,6 @@ exports.imprimirEstatisticas = async (req, res) => {
 
     } catch (error) {
         logger.error(`Erro ao calcular estatísticas: ${error.message}`, { stack: error.stack });
-        res.status(500);
+        res.status(400);
     }
 }
