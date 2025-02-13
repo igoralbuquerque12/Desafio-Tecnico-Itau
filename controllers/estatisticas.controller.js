@@ -8,7 +8,7 @@ exports.imprimirEstatisticas = async (req, res) => {
         const memoria = await memoriaModel.getMemoria();
         logger.info(`Dados carregados da memória: ${memoria.length} registros`);
 
-        let tempo = 60; // Mudar pra env
+        let tempo = process.env.TEMPO;
 
         if (req.query.tempo) {
             tempo = req.query.tempo;
@@ -42,10 +42,11 @@ exports.imprimirEstatisticas = async (req, res) => {
 
         if (count != 0) {
             avg = sum / count
+            console.log(`Estatísticas calculadas: count=${count}, sum=${sum}, avg=${avg}, min=${min}, max=${max}`)
         }
 
         logger.info(`Estatísticas calculadas: count=${count}, sum=${sum}, avg=${avg}, min=${min}, max=${max}`);
-
+        
         res.status(200).json({
             count: count,
             sum: sum,

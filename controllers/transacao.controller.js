@@ -6,7 +6,7 @@ exports.adicionarTransacao = async (req, res) => {
         logger.http(`Requisição recebida: ${req.method} ${req.originalUrl}`);
 
         const dataAtual = new Date();
-
+        // console.log('O valor que chega: ', req.body.valor, ' A hora: ', req.body.dataHora)
         if (!req.body.valor || !req.body.dataHora) {
             logger.error(`Erro na requisição: valor ou dataHora ausentes - Body recebido: ${JSON.stringify(req.body)}`);
             return res.status(422).end(); 

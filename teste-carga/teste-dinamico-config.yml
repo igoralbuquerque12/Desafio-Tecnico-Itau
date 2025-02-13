@@ -1,0 +1,48 @@
+config:
+  target: "http://localhost:4000"
+
+  phases:
+    - duration: 30
+      arrivalRate: 20
+      name: Ramp-up inicial - 20 req/s
+
+    - duration: 60
+      arrivalRate: 100
+      name: Platô Moderado - 100 req/s
+
+    - duration: 60
+      arrivalRate: 200 
+      name: Pico de Carga - 200 req/s
+
+    - duration: 30
+      arrivalRate: 100
+      name: Ramp-down - 100 req/s
+
+  payload:
+    - path: 'datas.csv'
+      fields:
+        - data
+
+scenarios: 
+  - name: 'Adicionar transacao'
+    weight: 15
+    flow: 
+      - post:
+          url: '/Transacao'
+          json:
+            valor: 10
+            dataHora: "{{ data }}"
+
+  - name: 'Remover transacao'
+    weight: 1
+    flow:
+      - delete: 
+          url: '/Transacao'
+        
+  - name: 'Imprimir Estatisticas'
+    weight: 4
+    flow: 
+      - get:
+          url: '/Estatisticas'
+          qs:
+            tempo: 300

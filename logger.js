@@ -11,8 +11,7 @@ const logger = createLogger({
         format.timestamp({
             format: 'YYYY-MM-DD HH:mm:ss'
         }),
-        format.splat(), 
-        format.json()
+        logFormat
     ),
     transports: [
         new transports.File({ filename: 'logs/informations.log'  })
