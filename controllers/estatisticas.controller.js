@@ -8,7 +8,7 @@ exports.imprimirEstatisticas = async (req, res) => {
         const memoria = await memoriaModel.getMemoria();
         logger.info(`Dados carregados da memória: ${memoria.length} registros`);
 
-        let tempo = process.env.TEMPO;
+        let tempo = process.env.TEMPO || 60;
 
         if (req.query.tempo) {
             tempo = req.query.tempo;
